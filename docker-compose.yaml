@@ -1,0 +1,22 @@
+services:
+  project-db:
+    image: postgres
+    container_name: project-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: project-db
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+
+  converter:
+    build: converter
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://project-db:5432/project-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
